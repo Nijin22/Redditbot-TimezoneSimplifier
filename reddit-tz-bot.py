@@ -191,8 +191,11 @@ while infiniteLoop:
         time.sleep(15)
         print '  Finished.'
         print 'Reporting to Simplify-Time lastonline...'
-        urllib2.urlopen('http://www.simplify-time.info/reddit-crawler/lastonline.php?logthis=true').read().strip()
-        print '  Finished.'
+        try:
+            urllib2.urlopen('http://www.simplify-time.info/reddit-crawler/lastonline.php?logthis=true').read().strip()
+            print '  Finished.'
+        except Exception:
+            print '  FAILED! Continuing....'
         loopcounter = loopcounter+1
     except (urllib2.HTTPError, requests.exceptions.HTTPError) as e:
         print "HTTP ERROR: " + str(e)
