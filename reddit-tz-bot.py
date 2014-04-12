@@ -10,7 +10,7 @@ import collections # for ordered dict (used in generating the output)
 print '  Finished.'
 
 signature = '\n\n---\n\nInfo: This message was submitted by a bot.\n\nFeedback, Problems and Questions: /r/TimezoneSimplifier\n\nComment unhelpfull? Downvote it! Comments with less than 0 points will be deleted and won\'t block space in this thread.'
-subreddit_names = ['TimezoneSimplifier', 'test', 'games', 'twitch', 'leagueoflegends', 'GlobalOffensive', 'tf2', 'worldnews', 'battlefield_4', 'dota2'] #The Subreddits, the bot visits
+subreddit_names = ['TimezoneSimplifier', 'test', 'games', 'twitch', 'leagueoflegends', 'GlobalOffensive', 'tf2', 'worldnews', 'battlefield_4', 'dota2', 'starcraft'] #The Subreddits, the bot visits
 # List of bots: http://www.reddit.com/r/botwatch/comments/1wg6f6/bot_list_i_built_a_bot_to_find_other_bots_so_far/cf1nu8p
 ignored_users = ['TweetPoster', 'TimezoneSimplifier', 'Website_Mirror_Bot', 'Fedora-Tip-Bot', 'annoying_yes_bot', 'Wiki_Bot', 'Relevant_News_Bot', 'fastnewsbot']
 ignore_words = ['PCPartPicker', 'GMT+', 'GMT-', 'UTC+', 'UTC-', 'GMT +', 'GMT -', 'UTC +', 'UTC -', 'no tzs', 'no bot answer']
