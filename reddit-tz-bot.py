@@ -210,10 +210,13 @@ while infiniteLoop:
     except KeyboardInterrupt:
         print 'Recieved KeyboardInterrupt. Breaking infinite loop'
         break
-    except Exception, e:
+    except (Exception, Error) as e:
         print "UNHANDLED ERROR: " + str(e)
-        file.close()
-        print 'File Closed. Raising error.'
-        raise
+        print "Waiting 2 Minutes before trying again."
+        time.sleep(60*2)
+        pass
+        #file.close()
+        #print 'File Closed. Raising error.'
+        #raise
 file.close()
 print '  File Closed. Ending now.'
