@@ -9,7 +9,7 @@ import time # to sleep the program
 import collections # for ordered dict (used in generating the output)
 print '  Finished.'
 
-signature = '\n\n---\n\nInfo: This message was submitted by a bot.\n\nFeedback, Problems and Questions: /r/TimezoneSimplifier'
+signature = '\n\n---\n\nInfo: This message was submitted by a bot.\n\nFeedback, Problems and Questions: /r/TimezoneSimplifier\n\nComment unhelpfull? Downvote it! Comments with less than 0 points will be deleted and won\'t block space in this thread.'
 subreddit_names = ['TimezoneSimplifier', 'test', 'games', 'twitch', 'leagueoflegends', 'GlobalOffensive', 'tf2', 'worldnews', 'battlefield_4', 'dota2'] #The Subreddits, the bot visits
 # List of bots: http://www.reddit.com/r/botwatch/comments/1wg6f6/bot_list_i_built_a_bot_to_find_other_bots_so_far/cf1nu8p
 ignored_users = ['TweetPoster', 'TimezoneSimplifier', 'Website_Mirror_Bot', 'Fedora-Tip-Bot', 'annoying_yes_bot', 'Wiki_Bot', 'Relevant_News_Bot', 'fastnewsbot']
@@ -186,6 +186,17 @@ while infiniteLoop:
                         checkSelfOcomment(comment)
                 print '  Comments checked (' + str(commentcount) + ')'
         
+        print "Checking my comments for ones with < 0 points"
+        commentcount = 0
+        my_user = r.get_redditor(parser.get('login', 'username'))
+        for comment in my_user.get_comments(limit=25):
+            if comment.score < 0:
+                print '  Found bad comment: ' + comment.id
+                comment.delete()
+                print '    deleted.'
+            commentcount = commentcount + 1
+        print '  ' + str(commentcount) + ' comments checked.'
+
         #wait 15 seconds before trying again
         print 'Waiting 15 seconds before continuing...'
         time.sleep(15)
@@ -210,7 +221,7 @@ while infiniteLoop:
     except KeyboardInterrupt:
         print 'Recieved KeyboardInterrupt. Breaking infinite loop'
         break
-    except (Exception, Error) as e:
+    except (Exception) as e:
         print "UNHANDLED ERROR: " + str(e)
         print "Waiting 2 Minutes before trying again."
         time.sleep(60*2)
