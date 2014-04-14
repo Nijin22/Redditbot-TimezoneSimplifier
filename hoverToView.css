@@ -1,0 +1,17 @@
+/* TimezoneSimplifier hover to display by /u/Dropping_fruits modified by /u/nijin22*/
+
+.comment .md h5+h6+h4+p,.comment .md h5+h6+h4+p+hr,.comment .md h5+h6+h4+p+hr+blockquote,.comment .md h5+h6+h4+p+hr+blockquote+hr,.comment .md h5+h6+h4+p+hr+blockquote+hr+p,.comment .md h5+h6+h4+p+hr+blockquote+hr+p+p {
+    display: none;
+}
+
+.comment .md:hover h5+h6+h4+p,.comment .md:hover h5+h6+h4+p+hr,.comment .md:hover h5+h6+h4+p+hr+blockquote,.comment .md:hover h5+h6+h4+p+hr+blockquote+hr,.comment .md:hover h5+h6+h4+p+hr+blockquote+hr+p,.comment .md:hover h5+h6+h4+p+hr+blockquote+hr+p+p {
+    display: block;
+}
+
+.comment .md h5+h6+h4:after {
+    content: "Timezones converted. Hover to view";
+}
+
+.comment .md:hover h5+h6+h4:after {
+content: ""
+}
