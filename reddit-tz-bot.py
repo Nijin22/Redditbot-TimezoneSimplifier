@@ -9,6 +9,7 @@ import time # to sleep the program
 import collections # for ordered dict (used in generating the output)
 print '  Finished.'
 
+preComment = '#####&#009;\n\n####&#009;\n\n######&#009;\n'; #required for subreddit specific CSS to enable "hover to view"
 signature = '\n\n---\n\nInfo: This message was submitted by a bot.\n\nFeedback, Problems and Questions: /r/TimezoneSimplifier\n\nComment unhelpful? Downvote it! Comments with less than 0 points will be deleted and won\'t block space in this thread.'
 subreddit_names = ['TimezoneSimplifier', 'test', 'twitch', 'leagueoflegends', 'GlobalOffensive', 'tf2', 'worldnews', 'battlefield_4', 'dota2', 'starcraft'] #The Subreddits, the bot visits
 # List of bots: http://www.reddit.com/r/botwatch/comments/1wg6f6/bot_list_i_built_a_bot_to_find_other_bots_so_far/cf1nu8p
@@ -126,7 +127,8 @@ def replyto(hour, minute, second, timezone_string, replyable):
     url += "&bannerurl=http://www.simplify-time.info/img/st-logo-v3.svg"
     stlink = urllib2.urlopen(url).read().strip()
     #Preparing answer
-    answer = local_dt.strftime("%H:%M:%S") + " (" + timezone_string + ") converted to other timezones:\n\n";
+    answer = preComment;
+    answer += local_dt.strftime("%H:%M:%S") + " (" + timezone_string + ") converted to other timezones:\n\n";
     print '      Finished.'
 
 

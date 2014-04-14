@@ -1,17 +1,23 @@
-/* TimezoneSimplifier hover to display by /u/Dropping_fruits modified by /u/nijin22*/
+/* TimezoneSimplifier hover to display by /u/Dropping_fruits (for autowikibot) modified by /u/nijin22 */
+/* Changes to original: TimezoneSimplifier uses h5+h4+h6 instead of h5+h6+h4*/
 
-.comment .md h5+h6+h4+p,.comment .md h5+h6+h4+p+hr,.comment .md h5+h6+h4+p+hr+blockquote,.comment .md h5+h6+h4+p+hr+blockquote+hr,.comment .md h5+h6+h4+p+hr+blockquote+hr+p,.comment .md h5+h6+h4+p+hr+blockquote+hr+p+p {
+.comment .md h5+h4+h6+p,.comment .md h5+h4+h6+p+p, .comment .md h5+h4+h6+p+p+table, .comment .md h5+h4+h6+p+p+table+hr, .comment .md h5+h4+h6+p+p+table+hr+p, .comment .md h5+h4+h6+p+p+table+hr+p+p, .comment .md h5+h4+h6+p+p+table+hr+p+p+p {
     display: none;
 }
 
-.comment .md:hover h5+h6+h4+p,.comment .md:hover h5+h6+h4+p+hr,.comment .md:hover h5+h6+h4+p+hr+blockquote,.comment .md:hover h5+h6+h4+p+hr+blockquote+hr,.comment .md:hover h5+h6+h4+p+hr+blockquote+hr+p,.comment .md:hover h5+h6+h4+p+hr+blockquote+hr+p+p {
+.comment .md:hover h5+h4+h6+p,.comment .md:hover h5+h4+h6+p+p, .comment .md:hover h5+h4+h6+p+p+table, .comment .md:hover h5+h4+h6+p+p+table+hr, .comment .md:hover h5+h4+h6+p+p+table+hr+p, .comment .md:hover h5+h4+h6+p+p+table+hr+p+p, .comment .md:hover h5+h4+h6+p+p+table+hr+p+p+p {
     display: block;
 }
 
-.comment .md h5+h6+h4:after {
+.comment .md h5+h4+h6:after {
     content: "Timezones converted. Hover to view";
+    /* Remove the following 4 lines if you do not want the image next to the link*/
+    /* Please not that you need to upload the small logo */
+    background-image: url(%%st-logo-v3%%);
+    background-repeat: no-repeat;
+    padding-left: 20px;
 }
 
-.comment .md:hover h5+h6+h4:after {
-content: ""
+.comment .md:hover h5+h4+h6:after {
+    content: ""
 }
