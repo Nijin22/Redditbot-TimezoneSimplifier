@@ -16,7 +16,7 @@ subreddit_names = ['TimezoneSimplifier', 'test', 'twitch', 'leagueoflegends', 'G
 ignored_users = ['TweetPoster', 'TimezoneSimplifier', 'Website_Mirror_Bot', 'Fedora-Tip-Bot', 'annoying_yes_bot', 'Wiki_Bot', 'Relevant_News_Bot', 'fastnewsbot']
 ignore_words = ['PCPartPicker', 'GMT+', 'GMT-', 'UTC+', 'UTC-', 'GMT +', 'GMT -', 'UTC +', 'UTC -', 'no tzs', 'no bot answer']
 ignore_comments_in = ['games'] # Watch for correct cases (upper+lower)
-timezones = {"gmt" : "UTC", "utc" : "UTC", "mez" : "Europe/Berlin", "cet" : "Europe/Berlin", "met" : "Europe/Berlin", "eet" : "Europe/Kiev", "msk" : "Europe/Moscow", "ist" : "Asia/Kolkata", "wet" : "Europe/London", "eastern" : "America/New_York", "edt" : "America/New_York", "est" : "America/New_York", "pdt" : "America/Los_Angeles", "pacific":"America/Los_Angeles", "pst" : "America/Los_Angeles", "mdt" : "America/Denver", "cdt" : "America/Chicago", "central" : "America/Chicago", "aest" : "Australia/Sydney", "brt" : "America/Sao_Paulo", "brst" : "America/Sao_Paulo", "kst" : "Asia/Seoul", "wib" : "Asia/Jakarta", "cst" : "Asia/Shanghai", "ulat" : "Asia/Shanghai", "krat" : "Asia/Shanghai"}
+timezones = {"gmt" : "UTC", "utc" : "UTC", "mez" : "Europe/Berlin", "cet" : "Europe/Berlin", "met" : "Europe/Berlin", "eet" : "Europe/Kiev", "msk" : "Europe/Moscow", "ist" : "Asia/Kolkata", "wet" : "Europe/London", "eastern" : "America/New_York", "edt" : "America/New_York", "est" : "America/New_York", "pdt" : "America/Los_Angeles", "pacific":"America/Los_Angeles", "pst" : "America/Los_Angeles", "mdt" : "America/Denver", "cdt" : "America/Chicago", "central" : "America/Chicago", "aest" : "Australia/Sydney", "brt" : "America/Sao_Paulo", "brst" : "America/Sao_Paulo", "kst" : "Asia/Seoul", "wib" : "Asia/Jakarta", "cst" : "Asia/Shanghai", "ulat" : "Asia/Shanghai", "krat" : "Asia/Shanghai", "nzst" : "Pacific/Auckland", "nzdt" : "Pacific/Auckland"}
 
 #Construct a regEx for all supported Timezones:
 timezones_regex = "("
@@ -134,7 +134,7 @@ def replyto(hour, minute, second, timezone_string, replyable):
 
     answer += "[In your timezone / auto detect](" + stlink + ")\n\n"
     
-    output_timezones = (("UTC", "UTC / GMT"),("Europe/London", "GMT / BST / WET / WEST"), ("Europe/Berlin","CET / CEST"), ( "Europe/Moscow", "MSK"), ("Asia/Kolkata","IST"),("Asia/Jakarta","WIB"),("Asia/Shanghai","CST / ULAT / KRAT / SGT"),("Asia/Seoul","KST / JST"), ( "Australia/Sydney","AEDT / AEST"), ("America/Los_Angeles","PST / PDT"), ("America/Denver","MDT"), ("America/Chicago","CDT"), ("America/New_York","EST / EDT"), ("America/Sao_Paulo","BRT / BRST"))
+    output_timezones = (("UTC", "UTC / GMT"),("Europe/London", "GMT / BST / WET / WEST"), ("Europe/Berlin","CET / CEST"), ( "Europe/Moscow", "MSK"), ("Asia/Kolkata","IST"),("Asia/Jakarta","WIB"),("Asia/Shanghai","CST / ULAT / KRAT / SGT"),("Asia/Seoul","KST / JST"), ( "Australia/Sydney","AEDT / AEST"),("Pacific/Auckland","NZST / NZDT"), ("America/Los_Angeles","PST / PDT"), ("America/Denver","MDT"), ("America/Chicago","CDT"), ("America/New_York","EST / EDT"), ("America/Sao_Paulo","BRT / BRST"))
     output_timezones = collections.OrderedDict(output_timezones)
     
     answer += "Timezone | Common Abbrev. | Time | DST active\n"
