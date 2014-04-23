@@ -1,3 +1,6 @@
+#!/usr/bin/python
+
+
 print 'Importing...'
 import requests # for error handling
 from ConfigParser import SafeConfigParser # to parse username and password from file
