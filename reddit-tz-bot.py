@@ -1,6 +1,9 @@
 #!/usr/bin/python
 
-
+print '==================================='
+print '== TimezoneSimplifier Reddit bot =='
+print '==================================='
+print
 print 'Importing...'
 import requests # for error handling
 from ConfigParser import SafeConfigParser # to parse username and password from file
@@ -10,7 +13,21 @@ import re # for regular Expressions
 import pytz, datetime # for caluclations between timezones
 import time # to sleep the program
 import collections # for ordered dict (used in generating the output)
+import sys # for reading command line arguments 
 print '  Finished.'
+
+#Checking command line argument "-i" for only important message print
+printAll = True
+try:
+    if sys.argv[1] == '-i':
+        printAll = False
+        print 'Writing only important output'
+    else:
+        printAll = True
+        print 'Writing all output'
+except IndexError:
+    printAll = True
+    print 'Writing all output'
 
 preComment = '#####&#009;\n\n####&#009;\n\n######&#009;\n'; #required for subreddit specific CSS to enable "hover to view"
 signature = '\n\n---\n\nInfo: This message was submitted by a bot.\n\nFeedback, Problems and Questions: /r/TimezoneSimplifier\n\nComment unhelpful? Downvote it! Comments with less than 0 points will be deleted and won\'t block space in this thread.'
@@ -168,30 +185,36 @@ def replyto(hour, minute, second, timezone_string, replyable):
 
 loopcounter = 0
 infiniteLoop = True #Set to false if debugging
+print 'Begining infinite loop'
 while infiniteLoop:
-    print ''
-    print 'Starting iteration #' + str(loopcounter)
+    if printAll:
+        print ''
+        print 'Starting iteration #' + str(loopcounter)
     try:
         for subreddit_name in subreddit_names:
             commentcount = 0
             submissioncount = 0
             subreddit = r.get_subreddit(subreddit_name)
-            print 'Looking into ' + subreddit_name
+            if printAll:
+                print 'Looking into ' + subreddit_name
             for submission in subreddit.get_new(limit=fetch_limit_posts):
                 if submission.is_self:
                     submissioncount = submissioncount + 1
                     checkSelfOcomment(submission)
-            print '  Submissions checked. (' + str(submissioncount) + ')'
+            if printAll:
+                print '  Submissions checked. (' + str(submissioncount) + ')'
             
             if subreddit_name in ignore_comments_in:
-                print '  Skipping comments in this subreddit'
+                if printAll:
+                    print '  Skipping comments in this subreddit'
             else:
                 for comment in subreddit.get_comments(limit=fetch_limit_comment):
                         commentcount = commentcount + 1
                         checkSelfOcomment(comment)
-                print '  Comments checked (' + str(commentcount) + ')'
-        
-        print "Checking my comments for ones with < 0 points"
+                if printAll:
+                    print '  Comments checked (' + str(commentcount) + ')'
+        if printAll:
+            print "Checking my comments for ones with < 0 points"
         commentcount = 0
         my_user = r.get_redditor(parser.get('login', 'username'))
         for comment in my_user.get_comments(limit=25):
@@ -200,18 +223,23 @@ while infiniteLoop:
                 comment.delete()
                 print '    deleted.'
             commentcount = commentcount + 1
-        print '  ' + str(commentcount) + ' comments checked.'
+        if printAll:
+            print '  ' + str(commentcount) + ' comments checked.'
 
         #wait 15 seconds before trying again
-        print 'Waiting 15 seconds before continuing...'
+        if printAll:
+            print 'Waiting 15 seconds before continuing...'
         time.sleep(15)
-        print '  Finished.'
-        print 'Reporting to Simplify-Time lastonline...'
+        if printAll:
+            print '  Finished.'
+            print 'Reporting to Simplify-Time lastonline...'
         try:
             urllib2.urlopen('http://www.simplify-time.info/reddit-crawler/lastonline.php?logthis=true').read().strip()
-            print '  Finished.'
+            if printAll:
+                print '  Finished.'
         except Exception:
-            print '  FAILED! Continuing....'
+            if printAll:
+                print '  FAILED! Continuing....'
         loopcounter = loopcounter+1
     except (urllib2.HTTPError, requests.exceptions.HTTPError) as e:
         print "HTTP ERROR: " + str(e)
