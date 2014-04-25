@@ -151,8 +151,10 @@ def replyto(hour, minute, second, timezone_string, replyable):
     answer += local_dt.strftime("%H:%M:%S") + " (" + timezone_string + ") converted to other timezones:\n\n";
     print '      Finished.'
 
-
-    answer += "[In your timezone / auto detect](" + stlink + ")\n\n"
+    if "ERROR" in stlink:
+        answer += "Creating the event on Simplify-Time failed. Please refer to the table below.\n\n"
+    else:
+        answer += "[In your timezone / auto detect](" + stlink + ")\n\n"
     
     output_timezones = (("UTC", "UTC / GMT"),("Europe/London", "GMT / BST / WET / WEST"), ("Europe/Berlin","CET / CEST"), ( "Europe/Moscow", "MSK"), ("Asia/Kolkata","IST"),("Asia/Jakarta","WIB"),("Asia/Shanghai","CST / ULAT / KRAT / SGT"),("Asia/Seoul","KST / JST"), ( "Australia/Sydney","AEDT / AEST"),("Pacific/Auckland","NZST / NZDT"), ("America/Los_Angeles","PST / PDT"), ("America/Denver","MDT"), ("America/Chicago","CDT"), ("America/New_York","EST / EDT"), ("America/Sao_Paulo","BRT / BRST"))
     output_timezones = collections.OrderedDict(output_timezones)
