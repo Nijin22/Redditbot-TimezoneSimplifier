@@ -31,12 +31,12 @@ except IndexError:
 
 preComment = '#####&#009;\n\n####&#009;\n\n######&#009;\n'; #required for subreddit specific CSS to enable "hover to view"
 signature = '\n\n---\n\nInfo: This message was submitted by a bot.\n\nFeedback, Problems and Questions: /r/TimezoneSimplifier\n\nComment unhelpful? Downvote it! Comments with less than 0 points will be deleted and won\'t block space in this thread.'
-subreddit_names = ['TimezoneSimplifier', 'test', 'twitch', 'leagueoflegends', 'GlobalOffensive', 'tf2', 'worldnews', 'battlefield_4', 'dota2', 'starcraft', 'warthunder', 'heroesofthestorm', 'codcompetitive'] #The Subreddits, the bot visits
+subreddit_names = ['TimezoneSimplifier', 'test', 'twitch', 'leagueoflegends', 'GlobalOffensive', 'tf2', 'worldnews', 'battlefield_4', 'dota2', 'starcraft', 'warthunder', 'heroesofthestorm', 'codcompetitive', 'titanfall'] #The Subreddits, the bot visits
 # List of bots: http://www.reddit.com/r/botwatch/comments/1wg6f6/bot_list_i_built_a_bot_to_find_other_bots_so_far/cf1nu8p
 ignored_users = ['TweetPoster', 'TimezoneSimplifier', 'Website_Mirror_Bot', 'Fedora-Tip-Bot', 'annoying_yes_bot', 'Wiki_Bot', 'Relevant_News_Bot', 'fastnewsbot', 'RemindMeBot']
 ignore_words = ['PCPartPicker', 'GMT+', 'GMT-', 'UTC+', 'UTC-', 'GMT +', 'GMT -', 'UTC +', 'UTC -', 'no tzs', 'no bot answer']
 ignore_comments_in = ['games'] # Watch for correct cases (upper+lower)
-timezones = {"gmt" : "UTC", "utc" : "UTC", "mez" : "Europe/Berlin", "cet" : "Europe/Berlin", "cest" : "Europe/Berlin", "met" : "Europe/Berlin", "eet" : "Europe/Kiev", "msk" : "Europe/Moscow", "ist" : "Asia/Kolkata", "wet" : "Europe/London", "eastern" : "America/New_York", "edt" : "America/New_York", "est" : "America/New_York", "pdt" : "America/Los_Angeles", "pacific":"America/Los_Angeles", "pst" : "America/Los_Angeles", "mdt" : "America/Denver", "cdt" : "America/Chicago", "central" : "America/Chicago", "aest" : "Australia/Sydney", "brt" : "America/Sao_Paulo", "brst" : "America/Sao_Paulo", "kst" : "Asia/Seoul", "wib" : "Asia/Jakarta", "cst" : "America/Chicago", "ulat" : "Asia/Shanghai", "krat" : "Asia/Shanghai", "nzst" : "Pacific/Auckland", "nzdt" : "Pacific/Auckland", "eat" : "Africa/Dar_es_Salaam", "wat":"Africa/Kinshasa"}
+timezones = {"gmt" : "UTC", "utc" : "UTC", "mez" : "Europe/Berlin", "cet" : "Europe/Berlin", "cest" : "Europe/Berlin", "met" : "Europe/Berlin", "eet" : "Europe/Kiev", "msk" : "Europe/Moscow", "ist" : "Asia/Kolkata", "wet" : "Europe/London", "eastern" : "America/New_York", "edt" : "America/New_York", "est" : "America/New_York", "pdt" : "America/Los_Angeles", "pacific":"America/Los_Angeles", "pst" : "America/Los_Angeles", "mdt" : "America/Denver", "cdt" : "America/Chicago", "central" : "America/Chicago", "aest" : "Australia/Sydney", "brt" : "America/Sao_Paulo", "brst" : "America/Sao_Paulo", "kst" : "Asia/Seoul", "wib" : "Asia/Jakarta", "cst" : "America/Chicago", "ulat" : "Asia/Shanghai", "krat" : "Asia/Shanghai", "nzst" : "Pacific/Auckland", "nzdt" : "Pacific/Auckland", "eat" : "Africa/Dar_es_Salaam", "wat":"Africa/Kinshasa", "nst" : "America/St_Johns", "ndt" : "America/St_Johns"}
 
 #Construct a regEx for all supported Timezones:
 timezones_regex = "("
@@ -156,7 +156,7 @@ def replyto(hour, minute, second, timezone_string, replyable):
     else:
         answer += "[In your timezone / auto detect](" + stlink + ")\n\n"
     
-    output_timezones = (("UTC", "UTC / GMT"),("Europe/London", "GMT / BST / WET / WEST"), ("Europe/Berlin","CET / CEST"), ("Africa/Dar_es_Salaam", "EAT"), ( "Europe/Moscow", "MSK"), ("Asia/Kolkata","IST"),("Asia/Jakarta","WIB"),("Asia/Shanghai","CST / ULAT / KRAT / SGT"),("Asia/Seoul","KST / JST"), ( "Australia/Sydney","AEDT / AEST"),("Pacific/Auckland","NZST / NZDT"), ("America/Los_Angeles","PST / PDT"), ("America/Denver","MDT"), ("America/Chicago","CDT"), ("America/New_York","EST / EDT"), ("America/Sao_Paulo","BRT / BRST"))
+    output_timezones = (("UTC", "UTC / GMT"),("Europe/London", "GMT / BST / WET / WEST"), ("Europe/Berlin","CET / CEST"), ("Africa/Dar_es_Salaam", "EAT"), ( "Europe/Moscow", "MSK"), ("Asia/Kolkata","IST"),("Asia/Jakarta","WIB"),("Asia/Shanghai","CST / ULAT / KRAT / SGT"),("Asia/Seoul","KST / JST"), ( "Australia/Sydney","AEDT / AEST"),("Pacific/Auckland","NZST / NZDT"), ("America/Los_Angeles","PST / PDT"), ("America/Denver","MDT"), ("America/Chicago","CDT"), ("America/New_York","EST / EDT"), ("America/Sao_Paulo","BRT / BRST"), ("America/St_Johns", "NST / NDT"))
     output_timezones = collections.OrderedDict(output_timezones)
     
     answer += "Timezone | Common Abbrev. | Time | DST active\n"
