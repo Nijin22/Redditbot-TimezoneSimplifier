@@ -160,7 +160,7 @@ def replyto(hour, minute, second, timezone_string, replyable):
     output_timezones = collections.OrderedDict(output_timezones)
     
     answer += "Timezone | Common Abbrev. | Time | DST active\n"
-    answer += "---------|---------|---------|---------|---------\n"
+    answer += ":---------:|:---------:|:---------:|:---------:|:---------:\n"
         
     for key, value in output_timezones.items():
         pytz_timezone = pytz.timezone(key)
