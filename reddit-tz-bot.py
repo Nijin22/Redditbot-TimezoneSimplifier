@@ -13,21 +13,11 @@ import re # for regular Expressions
 import pytz, datetime # for caluclations between timezones
 import time # to sleep the program
 import collections # for ordered dict (used in generating the output)
-import sys # for reading command line arguments 
+import sys # for reading command line arguments
+import logging 
 print '  Finished.'
 
-#Checking command line argument "-i" for only important message print
-printAll = True
-try:
-    if sys.argv[1] == '-i':
-        printAll = False
-        print 'Writing only important output'
-    else:
-        printAll = True
-        print 'Writing all output'
-except IndexError:
-    printAll = True
-    print 'Writing all output'
+logging.basicConfig(filename='timezonesimplifier_log.txt', level=logging.INFO, format='%(asctime)s %(message)s')
 
 preComment = '#####&#009;\n\n####&#009;\n\n######&#009;\n'; #required for subreddit specific CSS to enable "hover to view"
 signature = '\n\n---\n\nInfo: This message was submitted by a bot.\n\nFeedback, Problems and Questions: /r/TimezoneSimplifier\n\nComment unhelpful? Downvote it! Comments with less than 0 points will be deleted and won\'t block space in this thread.'
@@ -52,22 +42,23 @@ regEx = re.compile(r'([0-9]?[0-9]):([0-5][0-9])(:[0-5][0-9])?( PM| AM)? ' + time
 fetch_limit_comment = 150
 fetch_limit_posts = 25
 
-print 'Connecting and logging in'
+logging.info('Connecting and logging in')
 r = praw.Reddit("timezonesimplifier/1.2 by nijin22")
 parser = SafeConfigParser()
 parser.read('login.config')
-print '  as ' + parser.get('login', 'username') + ' with the password ' + parser.get('login', 'password')
+#logging.info('  as ' + parser.get('login', 'username') + ' with the password ' + parser.get('login', 'password'))
+logging.info('  as ' + parser.get('login', 'username') + ' with the password ' + "XXXXXXXXXXXXX")
 r.login(parser.get('login', 'username'),parser.get('login', 'password'))
-print '  Finished.'
+logging.info('  Finished.')
 
 
-print 'Loading posts-ids, we do not need to respond to...'
+logging.info('Loading posts-ids, we do not need to respond to...')
 file = open("done_Posts.txt") #Loading post we don't need to reply into list
 done_Posts = file.readlines()
 done_Posts = [item.strip() for item in done_Posts]
 map(str.strip, done_Posts)
 file.close()
-print '  Finished.'
+logging.info('  Finished.')
 
 file = open("done_Posts.txt", "a")
 
@@ -78,7 +69,7 @@ def checkSelfOcomment(selfOcomment):
     elif hasattr(selfOcomment, 'selftext'):
         content = selfOcomment.selftext
     else:
-        print 'ERROR: selfOcomment does not have body or selftext'
+        logging.warning('ERROR: selfOcomment does not have body or selftext')
         raise SystemError
     
     if not selfOcomment.author: #Fix for reddit problem with deleted user posts: http://www.reddit.com/r/redditdev/comments/1630jj/praw_is_returning_postauthorname_errors/c7s8zx9
@@ -94,7 +85,7 @@ def checkSelfOcomment(selfOcomment):
         
         matchObj = regEx.search(content)
         if (matchObj) and not any(word.lower() in content.lower() for word in ignore_words): # Found a regEx? AND does the content includes one of the "ignore post if this is posted" words?
-            print '  Found useable selfOcomment by ' + selfOcomment.author.name + ' with the ID: ' + selfOcomment.id
+            logging.info('  Found useable selfOcomment by ' + selfOcomment.author.name + ' with the ID: ' + selfOcomment.id)
             hour = int(matchObj.group(1))
             if str(matchObj.group(4)).lower() == " pm":
                 hour = hour + 12
@@ -136,7 +127,7 @@ def replyto(hour, minute, second, timezone_string, replyable):
 
     utc_dt = local_dt.astimezone(pytz.utc)
 
-    print '    Generating ST-Link'
+    logging.info('    Generating ST-Link')
     url = "http://www.simplify-time.info/api-create.php?"
     url += "identifier=reddittimezonesimplifier"
     url += "&name=Reddit%20Comment%20"+replyable.id
@@ -149,7 +140,7 @@ def replyto(hour, minute, second, timezone_string, replyable):
     #Preparing answer
     answer = preComment;
     answer += local_dt.strftime("%H:%M:%S") + " (" + timezone_string + ") converted to other timezones:\n\n";
-    print '      Finished.'
+    logging.info('      Finished.')
 
     if "ERROR" in stlink:
         answer += "Creating the event on Simplify-Time failed. Please refer to the table below.\n\n"
@@ -179,90 +170,71 @@ def replyto(hour, minute, second, timezone_string, replyable):
         elif hasattr(replyable, 'reply'):
             replyable.reply(answer + signature)
         else:
-            print 'ERROR: replyable does not have add_comment or reply function.'
+            logging.warning('ERROR: replyable does not have add_comment or reply function.')
             raise SystemError
-        print '    Replied.'
+        logging.info('    Replied.')
     else:
-        print '  Post contains invalid data. (e.g. hours > 24). SKIPPING'
+        logging.info('  Post contains invalid data. (e.g. hours > 24). SKIPPING')
 
 loopcounter = 0
 infiniteLoop = True #Set to false if debugging
-print 'Begining infinite loop'
+logging.info('Begining infinite loop')
 while infiniteLoop:
-    if printAll:
-        print ''
-        print 'Starting iteration #' + str(loopcounter)
+    logging.debug('Starting iteration #' + str(loopcounter))
     try:
         for subreddit_name in subreddit_names:
             commentcount = 0
             submissioncount = 0
             subreddit = r.get_subreddit(subreddit_name)
-            if printAll:
-                print 'Looking into ' + subreddit_name
+            logging.debug('Looking into ' + subreddit_name)
             for submission in subreddit.get_new(limit=fetch_limit_posts):
                 if submission.is_self:
                     submissioncount = submissioncount + 1
                     checkSelfOcomment(submission)
-            if printAll:
-                print '  Submissions checked. (' + str(submissioncount) + ')'
+            logging.debug('  Submissions checked. (' + str(submissioncount) + ')')
             
             if subreddit_name in ignore_comments_in:
-                if printAll:
-                    print '  Skipping comments in this subreddit'
+                logging.debug('  Skipping comments in this subreddit')
             else:
                 for comment in subreddit.get_comments(limit=fetch_limit_comment):
                         commentcount = commentcount + 1
                         checkSelfOcomment(comment)
-                if printAll:
-                    print '  Comments checked (' + str(commentcount) + ')'
-        if printAll:
-            print "Checking my comments for ones with < 0 points"
+                logging.debug('  Comments checked (' + str(commentcount) + ')')
+        logging.debug("Checking my comments for ones with < 0 points")
         commentcount = 0
         my_user = r.get_redditor(parser.get('login', 'username'))
         for comment in my_user.get_comments(limit=25):
             if comment.score < 0:
-                print '  Found bad comment: ' + comment.id
+                logging.info('  Found bad comment: ' + comment.id)
                 comment.delete()
-                print '    deleted.'
+                logging.info('    deleted.')
             commentcount = commentcount + 1
-        if printAll:
-            print '  ' + str(commentcount) + ' comments checked.'
+        logging.debug('  ' + str(commentcount) + ' comments checked.')
 
         #wait 15 seconds before trying again
-        if printAll:
-            print 'Waiting 15 seconds before continuing...'
+        logging.debug('Waiting 15 seconds before continuing...')
         time.sleep(15)
-        if printAll:
-            print '  Finished.'
-            print 'Reporting to Simplify-Time lastonline...'
+        logging.debug('  Finished.')
+        logging.debug('Reporting to Simplify-Time lastonline...')
         try:
             urllib2.urlopen('http://www.simplify-time.info/reddit-crawler/lastonline.php?logthis=true').read().strip()
-            if printAll:
-                print '  Finished.'
+            logging.debug('  Finished.')
         except Exception:
-            if printAll:
-                print '  FAILED! Continuing....'
+            logging.debug('  FAILED! Continuing....')
         loopcounter = loopcounter+1
     except (urllib2.HTTPError, requests.exceptions.HTTPError) as e:
-        print "HTTP ERROR: " + str(e)
-        print "Sleeping 60 seconds."
+        logging.error("HTTP ERROR: " + str(e))
+        logging.error("Sleeping 60 seconds.")
         time.sleep(60)
-        print "  Continuing"
+        logging.error("  Continuing")
         pass
-    #except praw.errors.RateLimitExceeded: <-- This might now work!
-    #    print 'RATE LIMIT EXEEDED. WAITING 10 MINUTES'
-    #    time.sleep(60*10)
-    #    pass
     except KeyboardInterrupt:
-        print 'Recieved KeyboardInterrupt. Breaking infinite loop'
+        logging.warning('Recieved KeyboardInterrupt. Breaking infinite loop')
         break
     except (Exception) as e:
-        print "UNHANDLED ERROR: " + str(e)
-        print "Waiting 2 Minutes before trying again."
+        logging.CRITICAL("UNHANDLED ERROR: " + str(e))
+        logging.CRITICAL( "Waiting 2 Minutes before trying again.")
         time.sleep(60*2)
         pass
-        #file.close()
-        #print 'File Closed. Raising error.'
-        #raise
 file.close()
-print '  File Closed. Ending now.'
+logging.warning('  File Closed. Ending now.')
