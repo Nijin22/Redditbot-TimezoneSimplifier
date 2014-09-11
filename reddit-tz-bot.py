@@ -17,7 +17,7 @@ import sys # for reading command line arguments
 import logging 
 print '  Finished.'
 
-logging.basicConfig(filename='timezonesimplifier_log.txt', level=logging.INFO, format='%(asctime)s %(message)s')
+logging.basicConfig(filename='timezonesimplifier_log.txt', level=logging.WARNING, format='%(asctime)s %(message)s')
 
 preComment = '#####&#009;\n\n####&#009;\n\n######&#009;\n'; #required for subreddit specific CSS to enable "hover to view"
 signature = '\n\n---\n\nInfo: This message was submitted by a bot.\n\nFeedback, Problems and Questions: /r/TimezoneSimplifier\n\nComment unhelpful? Downvote it! Comments with less than 0 points will be deleted and won\'t block space in this thread.'
