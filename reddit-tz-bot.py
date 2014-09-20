@@ -231,7 +231,7 @@ while infiniteLoop:
     except KeyboardInterrupt:
         logging.warning('Recieved KeyboardInterrupt. Breaking infinite loop')
         break
-    except (Exception) as e:
+    except Exception as e:
         logging.CRITICAL("UNHANDLED ERROR: " + str(e))
         logging.CRITICAL( "Waiting 2 Minutes before trying again.")
         time.sleep(60*2)
