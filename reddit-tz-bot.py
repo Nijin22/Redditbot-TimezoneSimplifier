@@ -88,17 +88,16 @@ def checkSelfOcomment(selfOcomment):
             logging.info('  Found useable selfOcomment by ' + selfOcomment.author.name + ' with the ID: ' + selfOcomment.id)
             hour = int(matchObj.group(1))
             if str(matchObj.group(4)).lower() == " pm":
-            	if hour == 12:
-            		#do nothing special 
-            		#americans "12:xx pm" means "12:xx" || "12:xx am" means "00:xx"
-            		#yes, for americans the clock goes 12am, 1am, 2am, ... , 11am, 12pm, 1pm, ...
-            		#don't ask me why please.
-            	else:
-            		hour = hour + 12
+                if hour != 12:
+                    #do nothing special 
+                    #americans "12:xx pm" means "12:xx" || "12:xx am" means "00:xx"
+                    #yes, for americans the clock goes 12am, 1am, 2am, ... , 11am, 12pm, 1pm, ...
+                    #don't ask me why please.
+                    hour = hour + 12
             if str(matchObj.group(4)).lower() == " am":
-            	if hour == 12:
-            		#see comments above
-            		hour = 0
+                if hour == 12:
+                    #see comments above
+                    hour = 0
             minute = int(matchObj.group(2))
             if matchObj.group(3): #Seconds are optional
                 second = int(matchObj.group(3)[1:])# [1:] means that we strip the first character (a ":")
