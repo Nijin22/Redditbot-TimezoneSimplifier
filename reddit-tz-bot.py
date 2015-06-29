@@ -21,7 +21,7 @@ logging.basicConfig(filename='timezonesimplifier_log.txt', level=logging.WARNING
 
 preComment = '#####&#009;\n\n####&#009;\n\n######&#009;\n'; #required for subreddit specific CSS to enable "hover to view"
 signature = '\n\n---\n\nInfo: This message was submitted by a bot.\n\nFeedback, Problems and Questions: /r/TimezoneSimplifier\n\nComment unhelpful? Downvote it! Comments with less than 0 points will be deleted and won\'t block space in this thread.'
-subreddit_names = ['TimezoneSimplifier', 'test', 'twitch', 'leagueoflegends', 'GlobalOffensive', 'tf2', 'worldnews', 'battlefield_4', 'dota2', 'starcraft', 'warthunder', 'heroesofthestorm', 'codcompetitive', 'titanfall', 'mcpublic', 'bravenewbies', 'ogn', 'littlewargame', 'anarchyonline', 'RunnerHub', 'watchamovienow'] #The Subreddits, the bot visits
+subreddit_names = ['TimezoneSimplifier', 'test', 'twitch', 'leagueoflegends', 'GlobalOffensive', 'tf2', 'worldnews', 'battlefield_4', 'dota2', 'starcraft', 'warthunder', 'heroesofthestorm', 'codcompetitive', 'titanfall', 'mcpublic', 'bravenewbies', 'ogn', 'littlewargame', 'anarchyonline', 'RunnerHub', 'watchamovienow', 'TheGreatWarChannel', 'AirBrawl'] #The Subreddits, the bot visits
 # List of bots: http://www.reddit.com/r/botwatch/comments/1wg6f6/bot_list_i_built_a_bot_to_find_other_bots_so_far/cf1nu8p
 ignored_users = ['TweetPoster', 'TimezoneSimplifier', 'Website_Mirror_Bot', 'Fedora-Tip-Bot', 'annoying_yes_bot', 'Wiki_Bot', 'Relevant_News_Bot', 'fastnewsbot', 'RemindMeBot', 'UltimatesTruth', 'RLinkBot', 'TweetsInCommentsBot']
 ignore_words = ['PCPartPicker', 'GMT+', 'GMT-', 'UTC+', 'UTC-', 'GMT +', 'GMT -', 'UTC +', 'UTC -', 'no tzs', 'no bot answer']
