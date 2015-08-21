@@ -12,7 +12,7 @@
 .comment .md h5+h4+h6:after {
     content: "Timezones converted. Hover to view";
     /* Remove the following 4 lines if you do not want the image next to the link*/
-    /* Please not that you need to upload the small logo */
+    /* Please note that you need to upload the small logo */
     background-image: url(%%st-logo-v3%%);
     background-repeat: no-repeat;
     padding-left: 20px;
